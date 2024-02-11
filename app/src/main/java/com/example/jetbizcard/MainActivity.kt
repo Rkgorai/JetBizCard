@@ -1,3 +1,5 @@
+package com.example.jetbizcard
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -39,13 +41,21 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.jetbizcard.R
+import com.example.jetbizcard.ui.theme.JetBizCardTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            CreateBizCard()
+            JetBizCardTheme {
+                // A surface container using the 'background' color from the theme
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = MaterialTheme.colorScheme.background
+                ) {
+                    CreateBizCard()
+                }
+            }
         }
     }
 }
@@ -78,7 +88,7 @@ fun CreateBizCard() {
                 Button(onClick = {
                     buttonClickedState.value = !buttonClickedState.value
                 }) {
-                    Text(text = "Portfolio")
+                    Text(text = "Family Members")
                 }
                 if (buttonClickedState.value) {
                     Content()
@@ -90,6 +100,8 @@ fun CreateBizCard() {
             }
 
         }
+
+
     }
 }
 
@@ -151,7 +163,7 @@ fun Portfolio(name: List<Map<String, Any>>) {
                     .padding(16.dp)
                     .fillMaxWidth()) {
 
-                    CreateImageProfile(modifier = Modifier.size(100.dp), item["img_id"] as Int)
+                    CreateImageProfile(modifier = Modifier.size(100.dp), item.get("img_id") as Int)
 
                     Column(modifier = Modifier
                         .padding(7.dp)
@@ -170,15 +182,15 @@ fun Portfolio(name: List<Map<String, Any>>) {
 private fun CreateInfo() {
     Column(modifier = Modifier.padding(5.dp)) {
         Text(
-            text = "Anya Forger",
+            text = "SPY X FAMILY",
             style = MaterialTheme.typography.headlineLarge,
             color = MaterialTheme.colorScheme.primary
         )
 
-        Text(text = "Telepath, Student", modifier = Modifier.padding(3.dp))
+        Text(text = "Anime, Manga", modifier = Modifier.padding(3.dp))
 
         Text(
-            text = "@starlightanya", modifier = Modifier.padding(3.dp),
+            text = "@tatsuya_endo", modifier = Modifier.padding(3.dp),
             style = MaterialTheme.typography.bodySmall
         )
     }
@@ -206,8 +218,11 @@ private fun CreateImageProfile(modifier: Modifier = Modifier, image_id: Int = R.
     }
 }
 
+
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    CreateBizCard()
+    JetBizCardTheme {
+        CreateBizCard()
+    }
 }
